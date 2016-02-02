@@ -22,7 +22,7 @@ class Evaluator extends REST_Controller {
     {
         // Construct the parent class
         parent::__construct();
-        $this->load->model('evaluatorModel','evaluator');
+        $this->load->model('Evaluator_model','evaluator');
         $this->load->helper('url');
     }
 

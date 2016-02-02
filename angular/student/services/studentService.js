@@ -30,7 +30,9 @@ return $resource(restUrl + 'student/:action/:id/:params/:params2',{action: '@act
         'addFamilyBackground': {method: 'POST', params: {action: 'family_background'}},
 
         'getStudentLoggedIn': {method: 'GET', params: {action: 'student_logged_in'}},
-        'getStudentLoggedInUserId': {method: 'GET', params: {action: 'student_user_id'}}
+        'getStudentLoggedInUserId': {method: 'GET', params: {action: 'student_user_id'}},
+
+        'getStudentInfo': {method: 'GET', params: {action: 'student_info'},isArray: true}
     });
 }]);
 

@@ -25,7 +25,7 @@ class Student extends CI_Controller {
         parent::__construct();
         $this->load->helper('download');
         $this->load->helper(array('form', 'url'));
-        $this->load->model('studentModel','student');
+        $this->load->model('Student_model','student');
     }
 	
 	public function profile($id)

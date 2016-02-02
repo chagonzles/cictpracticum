@@ -22,8 +22,8 @@ class Coordinator extends REST_Controller {
     {
         // Construct the parent class
         parent::__construct();
-        $this->load->model('studentModel','student');
-        $this->load->model('coordinatorModel','coordinator');
+        $this->load->model('Student_model','student');
+        $this->load->model('Coordinator_model','coordinator');
         $this->load->helper('url');
     }
 

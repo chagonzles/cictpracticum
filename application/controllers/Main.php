@@ -30,7 +30,7 @@ class Main extends CI_Controller {
         $this->load->helper(array('form', 'url'));
         // $this->load->library('email',$config);
 	$this->load->helper('path');
-        $this->load->model('studentModel','student');
+        $this->load->model('Student_model','student');
     }
 	
 	public function index()

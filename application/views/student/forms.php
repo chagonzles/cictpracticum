@@ -32,13 +32,6 @@
                         </li>
 
                         <li class="list-group-item">
-                           Certificate of Acceptance
-                            <div class="pull-right action-buttons">
-                                <a href="<?= base_url('student/forms/c_o_a') ?>"><span class="glyphicon glyphicon-pencil"></span></a>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item">
                             Waiver Form
                             <div class="pull-right action-buttons">
                                 <a href="<?= base_url('student/forms/waiver') ?>"><span class="glyphicon glyphicon-pencil"></span></a>

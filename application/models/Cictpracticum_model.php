@@ -1,6 +1,6 @@
 <?php
 
-class cictPracticumModel extends CI_Model {
+class Cictpracticum_model extends CI_Model {
 
 	public function loginAccount($account)
 	{

@@ -1,6 +1,6 @@
 <?php
 
-class coordinatorModel extends CI_Model {
+class Coordinator_model extends CI_Model {
 
 	public function loginCoordinator($account)
 	{

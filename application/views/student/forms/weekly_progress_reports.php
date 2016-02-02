@@ -50,7 +50,7 @@
 
 					<div class="row">
 					    <div class="col-xs-12">
-							<form role="form" type="POST" class="well" ng-submit="evaluateStudent()" name="frmEvaluateStudent" novalidate>
+							<form role="form" type="POST" class="well" ng-submit="submitProgressReport()" name="frmProgressReport" novalidate>
 							<h4><b>Task Report Form </b></h4>
 							<hr>
 								<div class="row">
@@ -58,7 +58,7 @@
 										<b>Company Name</b>
 									</div>
 									<div class="col-sm-8">
-										
+										{{ studentInfo[0].company_name }}
 									</div>
 								</div>
 								<br>
@@ -67,7 +67,7 @@
 										<b>Company Address</b>
 									</div>
 									<div class="col-sm-8">
-										
+										{{ studentInfo[0].company_address }}
 									</div>
 								</div>
 								<br>
@@ -75,17 +75,17 @@
 									<div class="col-sm-12">
 										<div class="form-group">
 											<label for=""><b>Task Title</b></label>
-											<input type="text" name="" class="form-control" value="" placeholder="Task Title">
+											<input type="text" name="" class="form-control" value="" placeholder="Task Title" ng-model="task_title">
 										</div>
 									</div>
 								</div>
 
 								<div class="row">
 									<div class="col-sm-12">
-										<label for="username" class="control-label">Task Start Date</label>
+										<label for="username" class="control-label"><b>Start Date</b></label>
 										 <div class="row">
 										 	<div class="col-xs-4">
-										 		<select name="month" ng-model="month" class="form-control" required>
+										 		<select name="start_month" ng-model="start_month" class="form-control" required>
 							            		<!-- <option value="2nd Sem">Jan</option>
 							            		<option value="Summer">Feb</option>
 							            		<option value="Summer">Mar</option> -->
@@ -103,7 +103,7 @@
 						            			
 										 	</div>
 										 	<div class="col-xs-4">
-										 		<select name="day" ng-model="day" id="position" class="form-control" required>
+										 		<select name="start_day" ng-model="start_day" id="position" class="form-control" required>
 							            			<?php for($i = 1; $i < 32; $i++):?>
 							            				<?php if($i < 10): ?>
 										                <option value="<?= '0'. $i;?>"><?= $i ?></li>
@@ -115,8 +115,8 @@
 						            			</select>
 										 	</div>
 										 	<div class="col-xs-4">
-										 		<select name="year" ng-model="year" id="position" class="form-control" required>
-									            	<?php for($yr = 1993; $yr > 1950; $yr--):?>
+										 		<select name="start_year" ng-model="start_year" id="position" class="form-control" required>
+									            	<?php for($yr = 2030; $yr > 2015; $yr--):?>
 										                <option value="<?= $yr;?>"><?= $yr ?></li>
 										        	<?php endfor;?>
 						            			</select>
@@ -136,10 +136,10 @@
 
 								<div class="row">
 									<div class="col-sm-12">
-										<label for="username" class="control-label">Task Start Date</label>
+										<label for="username" class="control-label"><b>End Date</b></label>
 										 <div class="row">
 										 	<div class="col-xs-4">
-										 		<select name="month" ng-model="month" class="form-control" required>
+										 		<select name="end_month" ng-model="end_month" class="form-control" required>
 							            		<!-- <option value="2nd Sem">Jan</option>
 							            		<option value="Summer">Feb</option>
 							            		<option value="Summer">Mar</option> -->
@@ -157,7 +157,7 @@
 						            			
 										 	</div>
 										 	<div class="col-xs-4">
-										 		<select name="day" ng-model="day" id="position" class="form-control" required>
+										 		<select name="end_day" ng-model="end_day" id="position" class="form-control" required>
 							            			<?php for($i = 1; $i < 32; $i++):?>
 							            				<?php if($i < 10): ?>
 										                <option value="<?= '0'. $i;?>"><?= $i ?></li>
@@ -169,8 +169,8 @@
 						            			</select>
 										 	</div>
 										 	<div class="col-xs-4">
-										 		<select name="year" ng-model="year" id="position" class="form-control" required>
-									            	<?php for($yr = 1993; $yr > 1950; $yr--):?>
+										 		<select name="end_year" ng-model="end_year" id="position" class="form-control" required>
+									            	<?php for($yr = 2030; $yr > 2015; $yr--):?>
 										                <option value="<?= $yr;?>"><?= $yr ?></li>
 										        	<?php endfor;?>
 						            			</select>
@@ -186,25 +186,87 @@
 
 
 
+								<!--  <div class="form-group">
+										
+										 <div class="row">
+										 	
+
+										 	<div class="col-sm-5">
+										 	<label for="username" class="control-label"><b>Start Time</b></label>
+										 		<div class="input-group">
+													<input type="text" name="sched_time_start" ng-model="sched_time_start" class="form-control" placeholder="Start Time"
+													required ng-minlength="3" maxlength="5" ng-pattern="/^[0-9 :]*$/">
+													<div class="input-group-addon">AM</div>
+												</div>
+						            				
+										 	</div>
+
+										 	<div class="col-sm-2">
+										 		
+										 	</div>
 								
-								<div class="row">
-									<div class="col-sm-6">
-										<div class="form-group">
-											<div class="col-sm-6">
-												<input type="number" class="form-control" value="" min="0" max="12">
-											</div>
-											<div class="col-sm-6">
-												<input type="number" class="form-control" value="" min="0" max="12">
-											</div>
-										</div>
-									</div>
+										 	<div class="col-sm-5">
+										 	<label for="username" class="control-label"><b>End Time</b></label>
+										 		<div class="input-group">
+													<input type="text" name="sched_time_end" ng-model="sched_time_end" class="form-control" placeholder="End Time"
+													required ng-minlength="3" maxlength="5" ng-pattern="/^[0-9 :]*$/">
+													<div class="input-group-addon">PM</div>
+												</div>
+										 	</div>
+												
+
+											
+										 		
+										 	
+										 </div>
+
+										 <!-- <p class="bg-danger" ng-show="frmAddStudent.sched_day_start.$error.required || 
+										 frmAddStudent.sched_day_end.$error.required">
+										 <b>Schedule Day is required</b>
+										 </p> -->
+							<!-- </div> -->
+
+							
+							<div class="row">
+							<br>
+								<div class="col-sm-4">
+									<label for="" class="control-label"><b>Trainee Name</b></label>
 								</div>
+								<div class="col-sm-8">
+									{{ studentInfo[0].firstname + ' ' + studentInfo[0].lastname }}
+								</div>
+							</div>
 
 
+							<div class="row">
+					
+								<div class="col-sm-4">
+									<label for="" class="control-label"><b>Course and Major</b></label>
+								</div>
+								<div class="col-sm-8">
+									{{ studentInfo[0].course + ' ' + studentInfo[0].major }}
+								</div>
+							</div>
 
+							<h4><b>Details of Task </b></h4>
+							<hr>
+							<div class="row">
+								<div class="col-sm-12">
+									<textarea name="" id="input" class="form-control" rows="3" required="required" ng-model="task_details"></textarea>
+								</div>
+							</div>
+							
+							<br>
 
-
-
+							<h4><b>Equipment to be use </b></h4>
+							<hr>
+							<div class="row">
+								<div class="col-sm-12">
+									<textarea name="" id="input" class="form-control" rows="3" required="required" ng-model="task_equipped"></textarea>
+								</div>
+							</div>
+								
+								
 
 
 
@@ -214,8 +276,8 @@
 								
 								<hr class="colorgraph">
 								<div class="row">
-									<div class="col-xs-12"><input type="submit" value="Submit Evaluation" class="btn btn-primary btn-block btn-lg" tabindex="7" 
-									ng-disabled="frmEvaluateStudent.$invalid"></div>
+									<div class="col-xs-12"><input type="submit" value="Submit Progress Report" class="btn btn-primary btn-block btn-lg" tabindex="7" 
+									ng-disabled="frmProgressReport.$invalid"></div>
 								</div>
 							</form>
 						</div>

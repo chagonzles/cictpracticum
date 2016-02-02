@@ -1,6 +1,6 @@
 <?php
 
-class studentModel extends CI_Model {
+class Student_model extends CI_Model {
 
 	public function loginStudent($account)
 	{
@@ -217,6 +217,20 @@ class studentModel extends CI_Model {
 		$this->db->order_by('c.criteria_id','ASC');
 		$query = $this->db->get();
 		return $query->result();
+	}
+
+
+	public function getStudentOjt($student_id)
+	{
+			$this->db->select('*');
+			$this->db->from('Cert_of_Acceptance');
+			$this->db->join('Student', 'Cert_of_Acceptance.student_id = Student.student_id');
+			$this->db->join('Account', 'Account.user_id = Student.user_id');
+			$this->db->join('Company','Cert_of_Acceptance.company_id = Company.company_id');
+			$this->db->join('Student_Status','Student_Status.student_id = Student.student_id');
+			$this->db->where('Student.student_id',$student_id);
+			$query = $this->db->get();
+			return $query->result();
 	}
 
 };

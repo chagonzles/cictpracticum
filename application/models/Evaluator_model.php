@@ -1,6 +1,6 @@
 <?php
 
-class evaluatorModel extends CI_Model {
+class Evaluator_model extends CI_Model {
 
 
 	public function addAccount($data)

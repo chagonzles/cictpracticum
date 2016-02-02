@@ -24,8 +24,8 @@ class Coordinator extends CI_Controller {
         // Construct the parent class
         parent::__construct();
         $this->load->helper('download');
-        $this->load->model('coordinatorModel','coordinator');
-        $this->load->model('studentModel','student');
+        $this->load->model('Coordinator_model','coordinator');
+        $this->load->model('Student_model','student');
         $this->load->helper(array('form', 'url'));
         
         

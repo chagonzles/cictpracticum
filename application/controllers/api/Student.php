@@ -22,9 +22,21 @@ class Student extends REST_Controller {
     {
         // Construct the parent class
         parent::__construct();
-        $this->load->model('studentModel','student');
+        $this->load->model('Student_model','student');
         $this->load->helper('url');
     }
+
+    public function student_info_get($student_id)
+    {
+        $student = $this->student->getStudentOjt($student_id);
+        $this->response($student,200);
+    }
+
+     public function announcements_stud_get()
+    {
+        $this->response(['response' => 'ok'],200);
+    }
+
 
      public function student_logged_in_get()
     {

@@ -20,12 +20,29 @@ student.controller('studentController',function($scope,$rootScope,$window,$locat
 	studentService.getStudentLoggedIn({}).$promise.then(function(res){
 			$scope.studentLoggedIn = res.student_id;
 			console.log('nakalogin na student ' + $scope.studentLoggedIn);
+			studentService.getStudentInfo({id: $scope.studentLoggedIn}).$promise.then(function(res){
+					console.log('info ni student');
+					$scope.studentInfo = res;
+			});
 	});
+
+	$scope.submitProgressReport = function() {
+		$scope.progressReport = {
+			task_title : $scope.task_title,
+			task_start_date: $scope.start_year + '-' + $scope.start_month + '-' + $scope.start_day,
+			tast_end_date: $scope.end_year + '-' + ($scope.end_month - 12) + '-' + $scope.end_day,
+			task_details: $scope.task_details,
+			task_equipped: $scope.task_equipped
+		}
+		console.log($scope.progressReport);
+	}
 
 	studentService.getStudentLoggedInUserId({}).$promise.then(function(res){
 			$scope.studentLoggedInUserId = res.user_id;
 			console.log('nakalogin na student ' + $scope.studentLoggedInUserId);
 	});
+
+	
 	function refreshAnnouncementNotifs()
 	{
 		studentService.announcements({id: $scope.studentLoggedIn}).$promise.then(function(res){
