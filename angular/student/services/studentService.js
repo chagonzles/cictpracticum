@@ -32,7 +32,12 @@ return $resource(restUrl + 'student/:action/:id/:params/:params2',{action: '@act
         'getStudentLoggedIn': {method: 'GET', params: {action: 'student_logged_in'}},
         'getStudentLoggedInUserId': {method: 'GET', params: {action: 'student_user_id'}},
 
-        'getStudentInfo': {method: 'GET', params: {action: 'student_info'},isArray: true}
+        'getStudentInfo': {method: 'GET', params: {action: 'student_info'},isArray: true},
+        'submitProgressReport': {method: 'POST', params: {action: 'weekly_progress_report'}},
+        'getWeeklyProgressReports': {method: 'GET', params: {action: 'weekly_progress_reports'},isArray: true},
+
+
+        'editProfile': {method: 'PUT', params: {action: 'student_edit_profile'}}
     });
 }]);
 

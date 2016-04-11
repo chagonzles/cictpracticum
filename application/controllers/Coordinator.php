@@ -501,5 +501,24 @@ class Coordinator extends CI_Controller {
 		$this->session->unset_userdata($student_data);
 		redirect('/');
 	}
+
+	public function generate_reports()
+	{
+		if($this->session->has_userdata('coordinator_id') && $this->session->has_userdata('user_id'))
+			{
+				$data = array(
+					'title' => 'CICT Practicum Report',
+					'error' => ''
+				);
+				$this->load->view('templates/header',$data);
+		
+				$this->load->view('coordinator/generate_report');
+				$this->load->view('templates/footer');
+			}
+			else
+			{
+				show_404();
+			}
+	}
 	
 }

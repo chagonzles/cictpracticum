@@ -176,5 +176,42 @@ class Evaluator_model extends CI_Model {
 		return $this->db->count_all_results();
 	}
 
+
+	public function getWeeklyProgressReports($evaluator_id)
+	{
+		$this->db->select('*');
+		$this->db->from('Weekly_Progress_Reports wpr');
+		$this->db->join('Student stud','stud.student_id = wpr.student_id');
+		$this->db->join('Account act','act.user_id = stud.user_id');
+		$this->db->where(array(
+			'wpr.evaluator_id' => $evaluator_id,
+			'wpr.date_filled_up_by_eval' => NULL,
+			'wpr.approved_by_evaluator' => 2
+		));
+		$this->db->order_by('weekly_report_id','DESC');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function getWeeklyProgressReport($id)
+	{
+		$this->db->select('*');
+		$this->db->from('Weekly_Progress_Reports wpr');
+		$this->db->where('wpr.weekly_report_id ',$id);
+		$this->db->join('Student stud','stud.student_id = wpr.student_id');
+		$this->db->join('Account act','act.user_id =  stud.user_id');
+
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function updateProgressReport($id,$data)
+	{
+		$this->db->where('weekly_report_id',$id);
+		$this->db->update('Weekly_Progress_Reports',$data);
+		return $this->db->affected_rows();
+	}
+
+
 	
 };

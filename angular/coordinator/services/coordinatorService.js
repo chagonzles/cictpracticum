@@ -6,6 +6,9 @@ return $resource(restUrl + 'coordinator/:action/:id/:params',{id:'@id',params:'@
         'getAnnouncements': {method: 'GET', params: {action: 'announcements'},isArray: true},
     	'postAnnouncement': {method: 'POST', params: {action: 'announcement'}},
     	'updateAnnouncement': {method: 'PUT', params: {action: 'announcement'}},
+        //revision
+        'deleteAnnouncement': {method: 'DELETE', params: {action: 'announcement'}},
+
     	'company': {method: 'GET', params: {action: 'company'}, isArray: true},
     	'companies': {method: 'GET', params: {action: 'companies'},isArray: true},
 

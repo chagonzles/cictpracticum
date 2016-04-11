@@ -5,7 +5,7 @@
 			<thead>
 				<tr>
 					<th>
-						<!-- <button type="button" class="btn btn-default" ng-click="showAddCompany()">Add New Company</button> -->
+						<a href="<?= base_url() .'coordinator/generate_reports/' ?>" class="btn btn-default" ng-click="goToGenerateReportPreview()"><b>GENERATE REPORT</b></a>
 					</th>
 					<th></th>
 					<th></th>
@@ -47,7 +47,7 @@
           <td>
               {{ student.date_start | date:'MMMM d, yyyy' }}
               <span ng-show="student.date_finished != NULL || student.date_finished == ''">
-              {{ '/' + student.date_finished }}
+              {{ '/' + student.date_finished | date:'MMMM d, yyyy'  }}
               </span>
 
               <span ng-hide="student.date_finished != NULL || student.date_finished == ''">

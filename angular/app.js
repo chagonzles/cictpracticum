@@ -100,28 +100,46 @@ app.controller('cictPracticum',function($scope,$rootScope,$window,studentService
 		$('#composeInquiry').modal();
 	}
 
-
-	$scope.goToStudentProgramEvaluationInfo = function(student) {
-		coordinatorService.getStudentProgramEvaluationInfo({id: student.student_id}).$promise.then(function(res){
+	//revision
+	$scope.goToStudentProgramEvaluationInfo = function(student_id) {
+		birthday = $scope.year + '-' + $scope.month + '-' + $scope.day;
+		coordinatorService.getStudentProgramEvaluationInfo({id: student_id,params: birthday}).$promise.then(function(res){
 			$scope.studentProgEval = res;
 			$scope.gradesToBeUpdatedList = [];
 			$scope.new_grade = '--';
 			
 			// $window.location.href = 'http://localhost/cictpracticum/coordinator/program_evaluation';
-			$scope.showStudentProgEval = true;
-			console.log('info ng student program evaluation');
-			console.log(res[0].student_id);
-			console.log($scope.showStudentProgEval);
-			$scope.showEditGrade = false;
-			coordinatorService.getStudentProgramEvaluationCourses({id: student.student_id}).$promise.then(function(res){
-				$scope.studentProgEvalCourses = res;
-				console.log('courses');
-				console.log(res);
-
-			});
+			if(res.length > 0)
+				{
+					$scope.showStudentProgEval = true;
+					$scope.noStudentData = false;
+					coordinatorService.getStudentProgramEvaluationCourses({id: student_id,'params': birthday}).$promise.then(function(res){
+						$scope.studentProgEvalCourses = res;
+						console.log('courses');
+						console.log(res);
+						
+					});
+				}
+				else
+				{
+						console.log('info ng student program evaluation');
+						// console.log(res[0].student_id);
+						console.log($scope.showStudentProgEval);
+						$scope.showEditGrade = false;
+						console.log(student_id);
+						$scope.noStudentData = true;
+				}
+		
+			
 		});
 	}
 
+	$scope.clearLogin = function() {
+		$scope.student_id = '';
+		$scope.month = '';
+		$scope.day = '';
+		$scope.year = '';
+	}
 
 
 });

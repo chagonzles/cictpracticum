@@ -109,7 +109,7 @@
 					<span ng-if="!showEditGrade"><span class="glyphicon glyphicon-pencil"></span> Edit</span>
 					<span ng-if="showEditGrade"><span class=" glyphicon glyphicon-remove"></span> Cancel</span>
 				</button>
-				<button type="button" class="btn btn-default" ng-disabled="!showEditGrade" ng-click="saveGrades(studentProgEval[0].student_id)">
+				<button type="button" class="btn btn-default" ng-disabled="!showEditGrade" ng-click="saveGrades(studentProgEval[0])">
 					<span class="glyphicon glyphicon-floppy-disk"></span> Save
 				</button>
 						

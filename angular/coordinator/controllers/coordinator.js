@@ -41,8 +41,17 @@ coordinator.controller('coordinatorController',function($scope,$rootScope,$windo
 			});
 			 
 	});
-
-
+	//revision
+	$scope.deleteAnnouncement = function(id) {
+		message = 'Are you sure you want to delete this announcement?';
+		if(confirm(message))
+		{
+			coordinatorService.deleteAnnouncement({id: id}).$promise.then(function(res){
+				console.log(res);
+				window.location = 'announcements';
+			});
+		}
+	}
 	
 	$scope.checkFile = function(userfile) {
 		console.log($scope.browsedFile);
@@ -173,7 +182,7 @@ coordinator.controller('coordinatorController',function($scope,$rootScope,$windo
 	}	
 
 	$scope.goToStudentProgramEvaluationInfo = function(student) {
-		coordinatorService.getStudentProgramEvaluationInfo({id: student.student_id}).$promise.then(function(res){
+		coordinatorService.getStudentProgramEvaluationInfo({id: student.student_id, params: student.birthday}).$promise.then(function(res){
 			$scope.studentProgEval = res;
 			$scope.gradesToBeUpdatedList = [];
 			$scope.new_grade = '--';
@@ -184,7 +193,7 @@ coordinator.controller('coordinatorController',function($scope,$rootScope,$windo
 			console.log(res[0].student_id);
 			console.log($scope.showStudentProgEval);
 			$scope.showEditGrade = false;
-			coordinatorService.getStudentProgramEvaluationCourses({id: student.student_id}).$promise.then(function(res){
+			coordinatorService.getStudentProgramEvaluationCourses({id: student.student_id, params: student.birthday}).$promise.then(function(res){
 				$scope.studentProgEvalCourses = res;
 				console.log('courses');
 				console.log(res);
@@ -224,31 +233,35 @@ coordinator.controller('coordinatorController',function($scope,$rootScope,$windo
 		console.log($scope.gradesToBeUpdatedList);
 	}
 
-
-	$scope.saveGrades = function(student_id) {
+	//revision
+	$scope.saveGrades = function(student) {
 		angular.forEach($scope.gradesToBeUpdatedList, function(grades,i){
-			coordinatorService.updateStudentProgEvalCourseGrades({id: student_id},grades).$promise.then(function(res){
+			coordinatorService.updateStudentProgEvalCourseGrades({id: student.student_id},grades).$promise.then(function(res){
 				console.log(res);
+				if(i >= ($scope.gradesToBeUpdatedList.length - 1))
+				{
+					coordinatorService.updateStudentProgEvalStatusAvg({id: student.student_id}).$promise.then(function(res){
+						console.log('update student status avg test');
+						console.log(res);
+
+						if(res.response == 'Successfully updated status and average')
+						{
+							coordinatorService.getStudentProgramEvaluationCourses({id: student.student_id,params: student.birthday }).$promise.then(function(res){
+									$scope.studentProgEvalCourses = res;
+									$scope.showEditGrade = false;
+									$scope.showStudentProgEval = true;
+									alert("Succesfully updated student's program evaluation");
+									$window.location.href = 'http://localhost/cictpracticum/coordinator/assessment';
+							});
+						}
+						
+					
+					});
+		
+				}
 			});
 		});
 
-		coordinatorService.updateStudentProgEvalStatusAvg({id: student_id}).$promise.then(function(res){
-			console.log('update student status avg test');
-			console.log(res);
-
-			// if(res.response == 'Successfully updated status and average' || res.response == 'Successfully updated status and average')
-			// {
-				coordinatorService.getStudentProgramEvaluationCourses({id: student_id}).$promise.then(function(res){
-						$scope.studentProgEvalCourses = res;
-						$scope.showEditGrade = false;
-						$scope.showStudentProgEval = true;
-						alert("Succesfully updated student's program evaluation");
-						$window.location.href = 'http://localhost/cictpracticum/coordinator/assessment';
-				});
-			// }
-			
-		
-		});
 		
 
 		
@@ -266,6 +279,11 @@ coordinator.controller('coordinatorController',function($scope,$rootScope,$windo
 			return null;
 	 	}
 		
+	}
+
+
+	$scope.printReport = function() {
+		window.print();
 	}
 	
 });

@@ -327,7 +327,7 @@ CREATE TABLE IF NOT EXISTS Course
 );
 
 /*student info*/
-INSERT INTO Student_Program_Evaluation(student_id,student_fname,student_lname,student_mname,yr_section) VALUES('12-12344','Juan','dela Cruz','Santos','BSCS-SD4B');
+INSERT INTO Student_Program_Evaluation(student_id,student_fname,student_lname,student_mname,yr_section,birthday) VALUES('12-12344','Juan','dela Cruz','Santos','BSCS-SD4B','1995-10-10');
 
 /*first year first sem*/
 INSERT INTO Course VALUES('',1,'MATH-102','College Algebra',3,0,'1st Year','1st-Semester','DRP','12-12344');
@@ -407,24 +407,26 @@ UPDATE Student_Program_Evaluation SET status = 'Not Qualified' WHERE student_id 
 
 
 
-CREATE TABLE Weekly_Reports
+CREATE TABLE Weekly_Progress_Reports
 (
 
     weekly_report_id INT NOT NULL AUTO_INCREMENT,
+    week_no INT,
     task_title VARCHAR(50),
     task_start_date DATE,
     task_end_date DATE,
-    task_start_time VARCHAR(10),
-    task_end_time VARCHAR(10),
+    -- task_start_time VARCHAR(10),
+    -- task_end_time VARCHAR(10),
     task_details VARCHAR(3000),
     task_equipped VARCHAR(1000),
     comments VARCHAR(1000),
     date_filled_up_by_eval DATE,
-    is_task_completed BOOLEAN,
+    is_task_completed INT DEFAULT 2,
     evaluator_id INT,
     student_id VARCHAR(8),
     seen_by_coor INT DEFAULT 0,
     seen_by_evaluator INT DEFAULT 0,
+    approved_by_evaluator INT DEFAULT 2,
     PRIMARY KEY(weekly_report_id),
     FOREIGN KEY(student_id)
         REFERENCES Student(student_id)

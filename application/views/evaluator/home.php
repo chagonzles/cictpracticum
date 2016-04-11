@@ -244,18 +244,18 @@ Licensed under MIT
 
 										 	<div class="col-sm-4">
 										 		<div class="input-group">
-													<input type="text" name="sched_time_start" ng-model="sched_time_start" class="form-control" placeholder="Start Time"
-													required ng-minlength="3" maxlength="5" ng-pattern="/^[0-9 :]*$/">
-													<div class="input-group-addon">AM</div>
+													<input type="time" name="sched_time_start" ng-model="sched_time_start" class="form-control" placeholder="Start Time"
+													required >
+													
 												</div>
 						            				
 										 	</div>
 								
 										 	<div class="col-sm-4">
 										 		<div class="input-group">
-													<input type="text" name="sched_time_end" ng-model="sched_time_end" class="form-control" placeholder="End Time"
-													required ng-minlength="3" maxlength="5" ng-pattern="/^[0-9 :]*$/">
-													<div class="input-group-addon">PM</div>
+													<input type="time" name="sched_time_end" ng-model="sched_time_end" class="form-control" placeholder="End Time"
+													required >
+												<!-- 	<div class="input-group-addon">PM</div> -->
 												</div>
 										 	</div>
 												

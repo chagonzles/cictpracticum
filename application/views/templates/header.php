@@ -19,6 +19,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<link rel="stylesheet" href="<?= base_url(); ?>assets/css/student/announcements.css">
 		<link rel="stylesheet" href="<?= base_url(); ?>assets/css/student/forms.css">
 		<link rel="stylesheet" href="<?= base_url(); ?>assets/css/app.css">
+		<link rel="stylesheet" href="<?= base_url(); ?>assets/css/angularPrint.css">
+		<link rel="stylesheet" href="<?= base_url(); ?>assets/css/zebra_datepicker_bootstrap.css">
 	
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

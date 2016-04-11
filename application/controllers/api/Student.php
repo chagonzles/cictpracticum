@@ -362,5 +362,52 @@ class Student extends REST_Controller {
         $this->response($evaluation,200);
     }
 
+    public function weekly_progress_report_post()
+    {
+        $data = array(
+            'week_no' => $this->post('week_no'),
+            'task_title' => $this->post('task_title'),
+            'task_start_date' => $this->post('task_start_date'),
+            'task_end_date' => $this->post('task_end_date'),
+            'task_details' => $this->post('task_details'),
+            'task_equipped' => $this->post('task_equipped'),
+            'student_id' =>  $this->session->userdata('student_id'),
+            'evaluator_id' => $this->post('evaluator_id')
+        );
+        $progress_reports = $this->student->postProgressReport($data);
+        if($progress_reports > 0)
+        {
+            $this->response(['response' => 'Successfully added progress reports'],200);
+        }
+    }
+
+    public function weekly_progress_reports_get()
+    {
+        $weekly_progress_reports = $this->student->getWeeklyProgressReports($this->session->userdata('student_id'));
+        $this->response($weekly_progress_reports,200);
+    }
+
+    public function weekly_progress_report_get($id)
+    {
+        $weekly_progress_report = $this->student->getWeeklyProgressReport($id);
+        $this->response($weekly_progress_report,200);
+    }
+
+    //revision
+    public function student_edit_profile_put($username)
+    {
+        $account = array(
+                'email' => $this->put('email'),
+                'address' => $this->put('address'),
+                'contact_number' => $this->put('contact_no'),
+        );
+
+        $student = $this->student->editProfile($account,$username);
+        if($student > 0)
+        {
+            $this->response(['response' => 'Successfully updated profile'],200);
+        }
+    }
+
    
 }

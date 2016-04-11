@@ -30,7 +30,10 @@ return $resource(restUrl + 'evaluator/:action/:id/:params/:params2',{action: '@a
         'addEvaluation': {method: 'POST', params: {action: 'evaluation'}},
         'addCriteria': {method: 'POST', params: {action: 'criteria'}},
 
-        'checkIfEvaluated': {method: 'GET',params: {action: 'evaluation'}}
+        'checkIfEvaluated': {method: 'GET',params: {action: 'evaluation'}},
+
+        'getWeeklyProgressReports': {method: 'GET', params: {action: 'weekly_progress_reports'},isArray: true},
+        'updateWeeklyProgressReport': {method: 'PUT', params: {action: 'weekly_progress_report'}}
        
     });
 }]);

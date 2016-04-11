@@ -64,6 +64,14 @@ class Coordinator extends REST_Controller {
         } 
     }
 
+    public function announcement_delete($id)
+    {
+        $announcement = $this->coordinator->deleteAnnouncement($id);
+        if($announcement > 0)
+        {
+            $this->response(['response' => 'Successfully deleted announcement']);
+        }
+    }
 
     public function companies_get()
     {
@@ -245,16 +253,16 @@ class Coordinator extends REST_Controller {
         $student_evaluation_list = $this->coordinator->getStudentProgramEvaluationList();
         $this->response($student_evaluation_list,200);
     }
-
-    public function student_program_evaluation_info_get($student_id)
+    //revision
+    public function student_program_evaluation_info_get($student_id,$birthday)
     {
-        $student_evaluation = $this->coordinator->getStudentProgramEvaluationInfo($student_id);
+        $student_evaluation = $this->coordinator->getStudentProgramEvaluationInfo($student_id,$birthday);
         $this->response($student_evaluation,200);
     }
-
-    public function student_program_evaluation_courses_get($student_id)
+    //revision
+    public function student_program_evaluation_courses_get($student_id,$birthday)
     {
-        $student_courses = $this->coordinator->getStudentProgramEvaluationCourses($student_id);
+        $student_courses = $this->coordinator->getStudentProgramEvaluationCourses($student_id,$birthday);
         $this->response($student_courses,200);
     }
 
@@ -275,7 +283,7 @@ class Coordinator extends REST_Controller {
         $this->response($grade,200);
     }
 
-
+    //revision
     public function student_prog_eval_status_avg_put($student_id)
     {
         //check if meron inc drp o 5.00
@@ -284,7 +292,7 @@ class Coordinator extends REST_Controller {
         if($deficiencies > 0)
         {
             $data = array(
-                'status' => 'Not qualified'
+                'status' => 'Not Qualified'
             );
             $status = $this->coordinator->updateStudentStatus($data,$student_id);
             if($status > 0)

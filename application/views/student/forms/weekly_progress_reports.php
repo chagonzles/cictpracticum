@@ -1,10 +1,116 @@
 <div class="container">
 	<div class="row">
 		<div class="col-sm-12">
-			<button type="button" class="btn btn-default" ng-click="showNewProgressReport()">Add New</button>
-		</div>
-	</div>
-</div>
+		
+		
+
+		<table class="table table-hover table-responsive" style="background: white">
+			<thead>
+				<tr>
+					<th>
+						<div class="form-group">
+							<button type="button" class="btn btn-default" ng-click="showNewProgressReport()">Add New Report</button>
+
+						</div>
+					</th>
+					<th>
+		
+					</th>
+					<th></th>
+					<th></th>
+					<th>	</th>
+				
+					
+					<th>
+					<div class="form-group">
+					<label for=""><b>Search By:</b> </label>
+						<div class="input-group">
+							
+				            <input type="text" class="form-control" placeholder="Week No" ng-model="search.week_no">
+				            <div class="input-group-btn">
+				                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+
+				            </div>
+					
+			        	</div>
+					</div>
+					
+			        </th>
+				</tr>
+				<tr>
+					<th>Week No</th>
+					<th>Task Title</th>
+					<th>Task Start/End Date</th>
+					<th>Comments</th>
+					<th>Task Completed</th>
+					<th>Approved By Evaluator</th>
+					
+				</tr>
+		
+			</thead>
+			<tbody ng-init="weekcount = 0">
+				<tr ng-repeat="weekly_progress_report in weekly_progress_reports | filter: search" ng-click="goToWeeklyProgressReportForm(weekly_progress_report.weekly_report_id)">
+					<td>{{ weekly_progress_report.week_no }}</td>
+					<td>{{ weekly_progress_report.task_title }}</td>
+					<td>{{ (weekly_progress_report.task_start_date  | date:'MMMM d, yyyy')  + ' - ' + (weekly_progress_report.task_end_date  | date:'MMMM d, yyyy')  }}</td>
+					<td>
+						<div ng-show="weekly_progress_report.comments == '' || weekly_progress_report.comments == NULL">
+							N/A
+						</div>
+						<div ng-hide="weekly_progress_report.comments == '' || weekly_progress_report.comments == NULL">
+							{{ weekly_progress_report.comments }}
+						</div>
+					</td>
+					<td>
+						<div ng-show="weekly_progress_report.is_task_completed == 1" >
+							<button class="btn btn-success btn-xs" ng-disabled="true"><i class="fa fa-check"></i> Task Completed</button>
+						</div>
+						<div ng-show="weekly_progress_report.is_task_completed == 0">
+							<button class="btn btn-primary btn-xs" ng-disabled="true"><i class="fa fa-times"></i> Task Not Completed</button>
+						</div>
+						<div ng-show="weekly_progress_report.is_task_completed == 2">
+							<button class="btn btn-default btn-xs" ng-disabled="true"><i class="fa fa-times"></i> Not Yet Evaluated</button>
+						</div>
+					</td>
+					<td>
+						<div ng-show="weekly_progress_report.approved_by_evaluator == 1" >
+							<button class="btn btn-success btn-xs" ng-disabled="true"><i class="fa fa-check"></i> Approved</button>
+						</div>
+						<div ng-show="weekly_progress_report.approved_by_evaluator == 0">
+							<button class="btn btn-primary btn-xs" ng-disabled="true"><i class="fa fa-times"></i> Rejected </button>
+						</div>
+						<div ng-show="weekly_progress_report.approved_by_evaluator == 2">
+							<button class="btn btn-default btn-xs" ng-disabled="true"><i class="fa fa-times"></i> Not Yet Approved </button>
+						</div>
+
+					</td>
+
+
+
+				
+				</tr>
+			</tbody>
+
+		</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		</div><!-- row col-sm-12 -->
+	</div><!-- row -->
+</div><!-- container -->
 
 
 
@@ -143,6 +249,7 @@
 							            		<!-- <option value="2nd Sem">Jan</option>
 							            		<option value="Summer">Feb</option>
 							            		<option value="Summer">Mar</option> -->
+							            		<?php $monthno = 1 ?>
 							            		<?php foreach ($months as $month):?>
 
 														<?php if($monthno < 10): ?>

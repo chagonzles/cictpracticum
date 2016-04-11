@@ -26,15 +26,34 @@ student.controller('studentController',function($scope,$rootScope,$window,$locat
 			});
 	});
 
+	studentService.getWeeklyProgressReports({}).$promise.then(function(res){
+			$scope.weekly_progress_reports = res;
+	});
+
 	$scope.submitProgressReport = function() {
+	
 		$scope.progressReport = {
+			week_no: $scope.weekly_progress_reports.length + 1,
 			task_title : $scope.task_title,
 			task_start_date: $scope.start_year + '-' + $scope.start_month + '-' + $scope.start_day,
-			tast_end_date: $scope.end_year + '-' + ($scope.end_month - 12) + '-' + $scope.end_day,
+			task_end_date: $scope.end_year + '-' + $scope.end_month  + '-' + $scope.end_day,
 			task_details: $scope.task_details,
-			task_equipped: $scope.task_equipped
+			task_equipped: $scope.task_equipped,
+			evaluator_id: $scope.studentInfo[0].evaluator_id
 		}
 		console.log($scope.progressReport);
+		studentService.submitProgressReport({},$scope.progressReport).$promise.then(function(res){
+				if(res.response == 'Successfully added progress reports')
+				{
+					alert('Successfully submitted weekly progress report');
+					$window.location.href = 'http://localhost/cictpracticum/student/forms/weekly_progress_reports';
+				}
+		});
+
+	}
+
+	$scope.goToWeeklyProgressReportForm = function(id) {
+		$window.location.href = 'http://localhost/cictpracticum/student/forms/weekly_progress_reports/' + id;
 	}
 
 	studentService.getStudentLoggedInUserId({}).$promise.then(function(res){
@@ -390,8 +409,22 @@ student.controller('studentController',function($scope,$rootScope,$window,$locat
 	}
 
 	
+	$scope.showEditProfile = function() {
+		$('#editProfileModal').modal();
+	}
 
-
+	$scope.editProfile = function() {
+		$scope.stud = {
+			contact_no: $scope.contact_no,
+			email: $scope.email,
+			address: $scope.address
+		}
+		studentService.editProfile({id: $scope.studentLoggedInUserId},$scope.stud).$promise.then(function(res){
+			console.log(res);
+			alert('Successfully updated profile');
+			$window.location = '/cictpracticum/';
+		})
+	}
 
 	
 });

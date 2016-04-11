@@ -315,7 +315,34 @@ class Evaluator extends REST_Controller {
             $this->response(['response' => 'Already evaluated']);
         }
     }
+
+    public function weekly_progress_reports_get()
+    {
+        $weekly_progress_reports = $this->evaluator->getWeeklyProgressReports($this->session->userdata('evaluator_id'));
+        $this->response($weekly_progress_reports,200);
+    }
   
+    public function weekly_progress_report_get($id)
+    {
+        $weekly_progress_report = $this->evaluator->getWeeklyProgressReport($id);
+        $this->response($weekly_progress_report,200);
+    }
+
+    public function weekly_progress_report_put($id)
+    {
+        $data = array(
+            'comments' => $this->put('comments'),
+            'is_task_completed' => $this->put('task_completed'),
+            'date_filled_up_by_eval' => $this->put('date_filled_up_by_eval'),
+            'approved_by_evaluator' => $this->put('approved_by_evaluator'),
+            'seen_by_evaluator' => $this->put('seen_by_evaluator')
+        );
+        $weekly_progress_report = $this->evaluator->updateProgressReport($id,$data);
+        if($weekly_progress_report > 0)
+        {
+            $this->response(['response' => 'Successfully updated progress report'],200);
+        }
+    }
 
    
 }

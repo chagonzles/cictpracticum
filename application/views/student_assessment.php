@@ -1,6 +1,6 @@
 <div class="container" ng-show="!showStudentProgEval">
 	<div class="row">
-		<h1>Assessment</h1>
+		
 
 		<!--  <?php echo form_open_multipart('coordinator/do_upload');?> -->
 		<!--  <div class="col-sm-3">
@@ -24,7 +24,75 @@
 
                             </form> -->
 
-	<table class="table table-hover table-responsive" style="background: white">
+
+    <div class="row center-block">
+    <br>
+    	<div class="col-sm-4 col-sm-offset-4">
+    		<form action="" method="POST" role="form" name="frmLogin" class="well" novalidate>
+	    		<legend>Student Assessment Login</legend>
+	    	
+	    		<div class="form-group">
+	    			<label for="">Student ID</label>
+	    			<input type="text" class="form-control" id="" placeholder="Student ID" ng-model="student_id" required>
+	    		</div>
+	    		
+	 
+	    		<div class="form-group">
+	    			<label for="username" class="control-label">Birthday</label>
+					 <div class="row">
+								 	<div class="col-xs-4">
+								 		<select name="month" ng-model="month" class="form-control" required>
+					            
+					            		<?php foreach ($months as $month):?>
+
+												<?php if($monthno < 10): ?>
+								                	<option value="<?= '0'. $monthno;?>"><?= $month ?></li></option>
+								            	<?php else: ?>
+								            		<option value="<?= $monthno;?>"><?= $month ?></li></option>
+								            	<?php endif ?>
+								            
+								               
+												<?php $monthno = $monthno + 1 ?>
+								        <?php endforeach;?>
+				            			</select>
+				            			
+								 	</div><!-- month -->
+								 	<div class="col-xs-4">
+								 		<select name="day" ng-model="day" id="position" class="form-control" required>
+					            			<?php for($i = 1; $i < 32; $i++):?>
+					            				<?php if($i < 10): ?>
+								                <option value="<?= '0'. $i;?>"><?= $i ?></li></option>
+								            	<?php else: ?>
+								            	<option value="<?= $i;?>"><?= $i ?></li></option>
+								            	<?php endif ?>
+								            	
+								        	<?php endfor;?>
+				            			</select>
+								 	</div><!-- day -->
+								 	<div class="col-xs-4">
+								 		<select name="year" ng-model="year" id="position" class="form-control" required>
+							            	<?php for($yr = 1996; $yr > 1989; $yr--):?>
+								                <option value="<?= $yr;?>"><?= $yr ?></li></option>
+								        	<?php endfor;?>
+
+				            			</select>
+								 	</div><!-- year -->
+								 </div><!-- col-xs-4 -->
+					<br>
+					<button type="button" class="btn btn-primary" ng-click="goToStudentProgramEvaluationInfo(student_id)" ng-disabled="frmLogin.$invalid">Submit</button>
+					<div ng-show="noStudentData" class="error">Login Failed</div>
+				</div><!-- row -->
+
+	    		</div>
+
+	    		
+	    	
+	    		
+	    	</form>
+    	</div>
+    </div>
+<!-- 
+	<table class="table table-hover table-responsive" style="background: white" ng-show="false">
 			<thead>
 				<tr>
 					<th>
@@ -69,7 +137,7 @@
 			</tbody>
 
 		</table>
-
+ -->
 
 
 
@@ -100,9 +168,8 @@
 <br>
 	<div class="row">
 		<div class="col-sm-12">
-			<button type="button" class="btn btn-default" ng-click="showStudentProgEval = false">
-				<span class="glyphicon glyphicon-arrow-left"></span>  Back to List
-			</button>
+			<button type="button" class="btn btn-default" ng-click="showStudentProgEval = false;clearLogin()">
+				<span class="glyphicon glyphicon-arrow-left"></span>  Back
 
 			
 
@@ -462,3 +529,4 @@
 		</div><!-- col entire page -->
 	</div><!-- row entire page -->
 </div>
+

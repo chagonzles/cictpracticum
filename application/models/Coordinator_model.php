@@ -57,6 +57,14 @@ class Coordinator_model extends CI_Model {
 			return $this->db->affected_rows();
 	}
 
+
+	//revision
+	public function deleteAnnouncement($id)
+	{
+			$this->db->where('announcement_id',$id);
+			$this->db->delete('Announcement');
+			return $this->db->affected_rows();
+	}
 	public function getAllCompany()
 	{
 			$this->db->where('approved_by_coordinator',1);
@@ -86,7 +94,10 @@ class Coordinator_model extends CI_Model {
 	public function getStudentAttachedFile()
 	{
 			$this->db->order_by('attached_file_id', 'DESC');
-			$this->db->where('status','pending');
+			$this->db->where(array(
+				'status' => 'pending',
+				'user_id is NOT' => NULL
+			));
 			$query = $this->db->get('Student_Attached_File');
 			return $query->result();
 	}
@@ -130,12 +141,13 @@ class Coordinator_model extends CI_Model {
 			$this->db->select('Account.lastname, 
 			Account.firstname,Account.middle_initial,Student.student_id,
 			Student.course,Student.major,Student.user_id,Company.company_name,
-			Company.company_address,Cert_of_Acceptance.date_start,Evaluator.evaluator_id');
+			Company.company_address,Cert_of_Acceptance.date_start,Evaluator.evaluator_id,Evaluation_Form.grade,Evaluation_Form.equivalent');
 			$this->db->from('Student');
 			$this->db->join('Cert_of_Acceptance','Student.student_id = Cert_of_Acceptance.student_id');
 			$this->db->join('Account','Student.user_id = Account.user_id');
 			$this->db->join('Company','Cert_of_Acceptance.company_id = Company.company_id');
 			$this->db->join('Evaluator','Company.company_id = Evaluator.company_id');
+			$this->db->join('Evaluation_Form','Evaluation_Form.student_id = Student.student_id');
 			$query = $this->db->get();
 			return $query->result();
 	}
@@ -164,18 +176,26 @@ class Coordinator_model extends CI_Model {
 		$query = $this->db->get('Student_Program_Evaluation');
 		return $query->result();
 	}
-
-	public function getStudentProgramEvaluationInfo($student_id)
+	//revision
+	public function getStudentProgramEvaluationInfo($student_id,$birthday)
 	{
-		$this->db->where('student_id',$student_id);
-		$query = $this->db->get('Student_Program_Evaluation');
+		$this->db->select('*');
+		$this->db->from('Student_Program_Evaluation');
+		$this->db->join('Course','Student_Program_Evaluation.student_id = Course.student_id');
+		$this->db->where('Course.student_id',$student_id);
+		$this->db->where('Student_Program_Evaluation.birthday',$birthday);
+		$query = $this->db->get();
 		return $query->result();
 	}
-
-	public function getStudentProgramEvaluationCourses($student_id)
+	//revision
+	public function getStudentProgramEvaluationCourses($student_id,$birthday)
 	{
-		$this->db->where('student_id',$student_id);
-		$query = $this->db->get('Course');
+		$this->db->select('*');
+		$this->db->from('Student_Program_Evaluation');
+		$this->db->join('Course','Student_Program_Evaluation.student_id = Course.student_id');
+		$this->db->where('Course.student_id',$student_id);
+		$this->db->where('Student_Program_Evaluation.birthday',$birthday);
+		$query = $this->db->get();
 		return $query->result();
 	}
 
@@ -186,11 +206,11 @@ class Coordinator_model extends CI_Model {
 		$this->db->update('Course',$data);
 		return $this->db->affected_rows();
 	}
-
+	//revision
 	public function checkIfHasDeficiencies($student_id)
 	{
 		$deficiencies = array('DRP', 'INC', '5.00');
-		
+		$this->db->where('student_id',$student_id);
 		$this->db->where_in('course_grade', $deficiencies);
 		$this->db->from('Course');
 		
@@ -203,12 +223,14 @@ class Coordinator_model extends CI_Model {
 		$this->db->update('Student_Program_Evaluation',$data);
 		return $this->db->affected_rows();
 	}
-
+	//revision
 	public function updateStudentAverage($student_id)
 	{
-		$query = $this->db->query("UPDATE Student_Program_Evaluation SET avg_grade = 
-						(SELECT (sum(course_grade * (course_unit_lec + course_unit_lab))) / (SUM(course_unit_lec) + SUM(course_unit_lab))as TOTAL FROM Course WHERE student_id = '12-12345')
-						WHERE student_id = '12-12345';"
+		$query = $this->db->query(
+		"UPDATE Student_Program_Evaluation SET avg_grade = 
+(SELECT (sum(course_grade * (course_unit_lec + course_unit_lab))) / (SUM(course_unit_lec) + SUM(course_unit_lab))as TOTAL FROM Course WHERE student_id = '{$student_id}')
+WHERE student_id = '{$student_id}';"
+
 						);
 		return $this->db->affected_rows();
 	}

@@ -130,5 +130,55 @@ class Evaluator extends CI_Controller {
 		$this->session->unset_userdata($evaluator_data);
 		redirect('/');
 	}
+
+	public function weekly_progress_reports($id)
+	{
+		if($this->session->has_userdata('evaluator_id') && $this->session->has_userdata('user_id'))
+    	{
+    		$account = $this->evaluator->getEvaluatorAccount($this->session->userdata('user_id'));
+    		$evaluator = $this->evaluator->getEvaluatorPosition($this->session->userdata('user_id'));
+    		$company = $this->evaluator->getEvaluatorCompany($this->session->userdata('user_id'));
+    		$weekly_progress_report = $this->evaluator->getWeeklyProgressReport($id);
+    		$data = array(
+				'title' => 'Online CICT Practicum Management System',
+				'account' => $account,
+				'evaluator' => $evaluator,
+				'company'=> $company,
+				'months' => array(
+								'Jan',
+								'Feb',
+								'Mar',
+								'Apr',
+								'May',
+								'Jun',
+								'Jul',
+								'Aug',
+								'Sep',
+								'Oct',
+								'Nov',
+								'Dec'
+				),
+				'monthno' => 1,
+				'day_names' => array(
+						'Mon',
+						'Tue',
+						'Wed',
+						'Thu',
+						'Fri',
+						'Sat',
+						'Sun'
+				),
+				'weekly_progress_report' => $weekly_progress_report
+			);
+    		$this->load->view('templates/header',$data);
+			$this->load->view('evaluator/navbar');
+			$this->load->view('evaluator/weekly_progress_report/form');
+			$this->load->view('templates/footer');
+    	}
+    	else
+    	{
+    		show_404();
+    	}
+	}
 	
 }

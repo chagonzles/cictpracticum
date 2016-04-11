@@ -48,12 +48,95 @@ Licensed under MIT
 		                	<h5><span class="text-info">Age:</span> <?= $student[0]->age ?></h5> 
 		                	<h5><span class="text-info">Address:</span> <?= $account[0]->address ?></h5> 
 		                	<h5><span class="text-info">Contact No:</span> <?= $account[0]->contact_number ?></h5>
+		                	<h5><span class="text-info">Email Address:</span> <?= $account[0]->email ?></h5>
 						</li>
 					</ul>
+					<button type="button" class="btn btn-default" ng-click="showEditProfile()">Edit Profile</button>
 				</div>
 				<!-- END MENU -->
 			</div>
 		</div>
+
+
+
+
+
+
+<div class="modal fade" id="editProfileModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Profile</h4>
+        </div>
+        <div class="modal-body">
+             <div class="row">
+
+                      <div class="col-sm-10 col-sm-offset-1">
+                        <form role="form" type="POST" name="frmEditProfile" 
+                        ng-submit="editProfile()" novalidate>
+                          
+
+                           <div class="form-group">
+                           <label for=""><b>Address</b></label>
+                              <input type="text" class="form-control" ng-model="address" placeholder="Address of the Company" required>
+                           </div>
+
+							
+						  <div class="form-group">
+                           <label for=""><b>Contact No</b></label>
+                              <input type="tel" class="form-control" ng-model="contact_no" placeholder="Contact Number" ng-pattern="/^[-0-9+ ()]*$/" required>
+      
+                           </div>
+
+                           <div class="form-group">
+                           <label for=""><b>Email</b></label>
+                              <input type="text" class="form-control" ng-model="email" placeholder="Company Email Address" required>
+                           </div>
+
+                         
+
+                          <input type="submit" value="Edit Profile"ng-disabled="frmEditProfile.$invalid" class="btn btn-primary">
+                        </form>
+                      </div>
+                  </div>
+        </div>
+   
+      </div>
+      
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <div class="col-md-9">

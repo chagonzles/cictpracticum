@@ -94,7 +94,12 @@
           
             <div class="panel panel-default">
             <div class="panel-heading">
-            <strong>Coordinator</strong> <span class="text-muted">posted</span><span class="glyphicon glyphicon-pencil pull-right" 
+            <strong>Coordinator</strong> <span class="text-muted">posted</span>
+
+            <span class="glyphicon glyphicon-remove pull-right" 
+            ng-click="deleteAnnouncement(announcement.announcement_id)" style="cursor: pointer"></span>
+
+            <span class="glyphicon glyphicon-pencil pull-right" 
             ng-click="showEditAnnouncement(announcement.title,announcement.content,announcement.announcement_id)"></span>
             </div>
             <div class="panel-body">

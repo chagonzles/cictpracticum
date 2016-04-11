@@ -83,7 +83,22 @@ class Main extends CI_Controller {
 	public function student_assessment()
 	{
 		$data = array(
-			'title' => 'Online CICT Practicum Management System'
+			'title' => 'CICT Practicum Monitoring System',
+			'months' => array(
+				'Jan',
+				'Feb',
+				'Mar',
+				'Apr',
+				'May',
+				'Jun',
+				'Jul',
+				'Aug',
+				'Sep',
+				'Oct',
+				'Nov',
+				'Dec'
+			),
+			'monthno' => 1
 		);
 		$this->load->view('templates/header',$data);
 		$this->load->view('templates/navbar');
@@ -317,5 +332,16 @@ class Main extends CI_Controller {
 
         }
 
+
+        public function forms()
+        {
+        	$data = array(
+				'title' => 'Online CICT Practicum Management System'
+			);
+			$this->load->view('templates/header',$data);
+			$this->load->view('templates/navbar');
+			$this->load->view('forms');
+			$this->load->view('templates/footer');
+        }
 	
 }

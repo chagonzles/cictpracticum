@@ -221,7 +221,7 @@ class Student extends CI_Controller {
 
 
 
-	public function forms($form = '',$student_id = '')
+	public function forms($form = '',$id = '')
 	{
 		if($this->session->has_userdata('student_id') && $this->session->has_userdata('user_id'))
 		{
@@ -284,7 +284,7 @@ class Student extends CI_Controller {
 				$this->load->view('templates/footer');
 			}
 
-			else if($form = 'weekly_progress_reports')
+			else if($form = 'weekly_progress_reports' && $id == '')
 			{
 
 
@@ -322,7 +322,46 @@ class Student extends CI_Controller {
 				
 
 			}
+			else if($form = 'weekly_progress_reports' && $id != '')
+			{
 
+
+						$student = $this->student->getStudent($this->session->userdata('student_id'));
+						$account = $this->student->getStudentAccount($this->session->userdata('user_id'));
+						$status = $this->student->getStudentStatus($this->session->userdata('student_id'));
+						$coa = $this->student->getStudentCoA($this->session->userdata('student_id'));
+						$weekly_progress_report = $this->student->getWeeklyProgressReport($id);
+
+						$data = array(
+							'title' => 'Online CICT Practicum Management System',
+							'student' => $student,
+							'account' => $account,
+							'status' => $status,
+							'coa' => $coa,
+							'months' => array(
+								'Jan',
+								'Feb',
+								'Mar',
+								'Apr',
+								'May',
+								'Jun',
+								'Jul',
+								'Aug',
+								'Sep',
+								'Oct',
+								'Nov',
+								'Dec'
+							),
+							'monthno' => 1,
+							'weekly_progress_report' => $weekly_progress_report
+						);
+						$this->load->view('templates/header',$data);
+						$this->load->view('student/navbar');
+						$this->load->view('student/forms/weekly_progress_report');
+						$this->load->view('templates/footer');
+				
+
+			}
 			
 
 		}
@@ -354,8 +393,8 @@ class Student extends CI_Controller {
 
                 if ( ! $this->upload->do_upload('userfile'))
                 {
-                        $error = array('error' => $this->upload->display_errors());
-
+                      
+                   	  echo "<script>alert('.Doc and .Docx file type are only allowed'); window.location = './forms';</script>";
                 
                 }
                 else

@@ -1,17 +1,16 @@
-  <body ng-controller="cictPracticum" id="login-page">
-    
-  <div id="login-overlay" class="modal-dialog">
+
+	<div id="login-overlay" class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
               <h5 class="modal-title" id="myModalLabel">
-                Online CICT Practicum Management System 
+              	Online CICT Practicum Management System	
 
               </h5>
           </div>
           <div class="modal-body">
               <div class="row">
-                  <div class="col-sm-6">
+              	  <div class="col-sm-6">
                       <img src="<?= base_url(); ?>assets/img/logo-cict.png" alt="" class="img img-responsive">
                   </div>
                   <div class="col-sm-6">
@@ -37,13 +36,13 @@
                               </div>
 
                              <!--  <div class="form-group">  
-                                  <label for="position" class="control-label">Position</label>                           
-                                  <select ng-model="position" class="form-control">
+                              		<label for="position" class="control-label">Position</label>                           
+                                	<select ng-model="position" class="form-control">
                                     <option value="Student">Student</option>
-                                    <option value="Coordinator">Coordinator</option>
+                                		<option value="Coordinator">Coordinator</option>
                                     <option value="Evaluator">Evaluator</option>
-                                    
-                                  </select>
+                                		
+                                	</select>
                                   <span class="help-block"></span>
                               </div> -->
                               <p ng-show="invalidLogin" class="bg-danger">Wrong username or password</p>
@@ -87,7 +86,5 @@
   </div>
 
 
-    
+		
 
-
-</div>

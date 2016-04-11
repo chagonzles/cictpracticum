@@ -1,6 +1,6 @@
 var evaluator = angular.module('evaluator',['evaluatorService']);
 
-evaluator.controller('evaluatorController',function($scope,$rootScope,$window,$location,evaluatorService){
+evaluator.controller('evaluatorController',function($scope,$rootScope,$window,$location,evaluatorService,$interval){
 	$scope.account = {};
 	$scope.inputType = 'password';
 	$scope.toggle = 'Show';
@@ -111,7 +111,7 @@ evaluator.controller('evaluatorController',function($scope,$rootScope,$window,$l
 			division_dept: $scope.division_dept,
 			date_start: $scope.year + '-' + $scope.month + '-' + $scope.day,
 			sched_day: $scope.sched_day_start + ' - ' + $scope.sched_day_end,
-			sched_time: $scope.sched_time_start + ' AM ' + ' - ' + $scope.sched_time_start + ' PM',
+			sched_time: $scope.sched_time_start + ' AM ' + ' - ' + $scope.sched_time_end + ' PM',
 			student_id: $scope.student_id
 		};
 		console.log($scope.student_info);
@@ -271,9 +271,14 @@ evaluator.controller('evaluatorController',function($scope,$rootScope,$window,$l
 	
 	$scope.addToSched = function(day,start_time,end_time) {
 		// $scope.studentSchedNo += 1;
+		end_time_una = parseInt(String(end_time).substr(16,2)) - 12;
+		if(end_time_una < 10)
+		{
+			end_time_una = '0' + end_time_una;
+		}
 		$scope.sched = {
 			day: day,
-			time: start_time + 'AM' + ' - ' + end_time + 'PM'
+			time: String(start_time).substr(16,5) + 'AM' + ' - ' + end_time_una + String(end_time).substr(18,3) + 'PM'
 		};
 		$scope.studentSched.push($scope.sched);
 		console.log($scope.studentSched);
@@ -482,8 +487,42 @@ evaluator.controller('evaluatorController',function($scope,$rootScope,$window,$l
 
 	};
 
+	refreshProgressReportNotifs();
 
+	$interval(function(){
+		refreshProgressReportNotifs();
+	},5000);
 
+	function refreshProgressReportNotifs()
+	{
+		evaluatorService.getWeeklyProgressReports({}).$promise.then(function(res){
+			$scope.weekly_progress_reports = res;
+		});
+	}
 
+	$scope.viewWeeklyProgressReport = function(id) {
+		$window.location.href = 'http://localhost/cictpracticum/evaluator/weekly_progress_reports/' + id;
+	}
+
+	$scope.submitProgressReport = function() {
+		$scope.url = $window.location.href;
+		$scope.weekly_report_id = $scope.url.substr($scope.url.lastIndexOf('/') + 1);
+		$scope.progress_report = {
+			comments: $scope.comments,
+			task_completed: $scope.task_completed,
+			date_filled_up_by_eval: moment().format('YYYY-MM-DD'),
+			approved_by_evaluator: 1,
+			seen_by_evaluator: 1
+		};
+		console.log($scope.progress_report);
+		console.log($scope.weekly_report_id);
+		evaluatorService.updateWeeklyProgressReport({id: $scope.weekly_report_id },$scope.progress_report).$promise.then(function(res){
+			if(res.response == 'Successfully updated progress report')
+			{
+				alert('Successfully submitted progress report');
+				$window.location.href = 'http://localhost/cictpracticum/evaluator/home';
+			}
+		});
+	}
 
 });

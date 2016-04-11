@@ -17,7 +17,8 @@
 			<li class="active"><a href="<?= base_url('main') ?>">Home</a></li>
 			<li><a href="<?= base_url('main/student_assessment') ?>">Student Assessment</a></li>
 			<li><a href="<?= base_url('main/company')?>">Company List</a></li>
-			<li><a href="#">About</a></li>
+			<li><a href="<?= base_url('main/forms') ?>">Forms</a></li>
+		<!-- 	<li><a href="#">About</a></li> -->
 		</ul>
 		
 		<ul class="nav navbar-nav navbar-right">

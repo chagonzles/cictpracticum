@@ -228,9 +228,42 @@ class Student_model extends CI_Model {
 			$this->db->join('Account', 'Account.user_id = Student.user_id');
 			$this->db->join('Company','Cert_of_Acceptance.company_id = Company.company_id');
 			$this->db->join('Student_Status','Student_Status.student_id = Student.student_id');
+			$this->db->join('Evaluator','Evaluator.company_id = Company.company_id');
 			$this->db->where('Student.student_id',$student_id);
 			$query = $this->db->get();
 			return $query->result();
 	}
 
+	public function postProgressReport($data)
+	{
+		$this->db->insert('Weekly_Progress_Reports',$data);
+		return $this->db->affected_rows();
+	}
+
+	public function getWeeklyProgressReports($student_id)
+	{
+		$this->db->where('student_id',$student_id);
+		$query = $this->db->get('Weekly_Progress_Reports');
+		return $query->result();
+	}
+
+	public function getWeeklyProgressReport($id)
+	{
+		$this->db->select('*');
+		$this->db->from('Weekly_Progress_Reports wpr');
+		$this->db->where('wpr.weekly_report_id ',$id);
+		$this->db->join('Evaluator ev','ev.evaluator_id = wpr.evaluator_id');
+		$this->db->join('Account act','act.user_id = ev.user_id');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+
+	public function editProfile($data,$username)
+	{
+
+		$this->db->where('user_id',$username);
+		$this->db->update('Account',$data);
+		return $this->db->affected_rows();
+	}
 };
