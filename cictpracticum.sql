@@ -327,7 +327,7 @@ CREATE TABLE IF NOT EXISTS Course
 );
 
 /*student info*/
-INSERT INTO Student_Program_Evaluation(student_id,student_fname,student_lname,student_mname,yr_section,birthday) VALUES('12-12344','Juan','dela Cruz','Santos','BSCS-SD4B','1995-10-10');
+INSERT INTO Student_Program_Evaluation(student_id,student_fname,student_lname,student_mname,yr_section) VALUES('12-12344','Juan','dela Cruz','Santos','BSCS-SD4B');
 
 /*first year first sem*/
 INSERT INTO Course VALUES('',1,'MATH-102','College Algebra',3,0,'1st Year','1st-Semester','DRP','12-12344');
